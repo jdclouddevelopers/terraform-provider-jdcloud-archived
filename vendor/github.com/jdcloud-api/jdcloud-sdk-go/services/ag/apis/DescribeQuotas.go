@@ -18,70 +18,70 @@ package apis
 
 import (
     "github.com/jdcloud-api/jdcloud-sdk-go/core"
-    vm "github.com/jdcloud-api/jdcloud-sdk-go/services/vm/models"
+    ag "github.com/jdcloud-api/jdcloud-sdk-go/services/ag/models"
+    common "github.com/jdcloud-api/jdcloud-sdk-go/services/common/models"
 )
 
-type DescribeImageConstraintsRequest struct {
+type DescribeQuotasRequest struct {
 
     core.JDCloudRequest
 
-    /* 地域ID  */
+    /* Region ID  */
     RegionId string `json:"regionId"`
 
-    /* 镜像ID  */
-    ImageId string `json:"imageId"`
+    /* resourceTypes - 资源类型，暂时只支持[ag]
+ (Optional) */
+    Filters []common.Filter `json:"filters"`
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
+ * param regionId: Region ID (Required)
  *
  * @Deprecated, not compatible when mandatory parameters changed
  */
-func NewDescribeImageConstraintsRequest(
+func NewDescribeQuotasRequest(
     regionId string,
-    imageId string,
-) *DescribeImageConstraintsRequest {
+) *DescribeQuotasRequest {
 
-	return &DescribeImageConstraintsRequest{
+	return &DescribeQuotasRequest{
         JDCloudRequest: core.JDCloudRequest{
-			URL:     "/regions/{regionId}/images/{imageId}/constraints",
+			URL:     "/regions/{regionId}/quotas",
 			Method:  "GET",
 			Header:  nil,
 			Version: "v1",
 		},
         RegionId: regionId,
-        ImageId: imageId,
 	}
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
+ * param regionId: Region ID (Required)
+ * param filters: resourceTypes - 资源类型，暂时只支持[ag]
+ (Optional)
  */
-func NewDescribeImageConstraintsRequestWithAllParams(
+func NewDescribeQuotasRequestWithAllParams(
     regionId string,
-    imageId string,
-) *DescribeImageConstraintsRequest {
+    filters []common.Filter,
+) *DescribeQuotasRequest {
 
-    return &DescribeImageConstraintsRequest{
+    return &DescribeQuotasRequest{
         JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}/constraints",
+            URL:     "/regions/{regionId}/quotas",
             Method:  "GET",
             Header:  nil,
             Version: "v1",
         },
         RegionId: regionId,
-        ImageId: imageId,
+        Filters: filters,
     }
 }
 
 /* This constructor has better compatible ability when API parameters changed */
-func NewDescribeImageConstraintsRequestWithoutParam() *DescribeImageConstraintsRequest {
+func NewDescribeQuotasRequestWithoutParam() *DescribeQuotasRequest {
 
-    return &DescribeImageConstraintsRequest{
+    return &DescribeQuotasRequest{
             JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}/constraints",
+            URL:     "/regions/{regionId}/quotas",
             Method:  "GET",
             Header:  nil,
             Version: "v1",
@@ -89,28 +89,29 @@ func NewDescribeImageConstraintsRequestWithoutParam() *DescribeImageConstraintsR
     }
 }
 
-/* param regionId: 地域ID(Required) */
-func (r *DescribeImageConstraintsRequest) SetRegionId(regionId string) {
+/* param regionId: Region ID(Required) */
+func (r *DescribeQuotasRequest) SetRegionId(regionId string) {
     r.RegionId = regionId
 }
 
-/* param imageId: 镜像ID(Required) */
-func (r *DescribeImageConstraintsRequest) SetImageId(imageId string) {
-    r.ImageId = imageId
+/* param filters: resourceTypes - 资源类型，暂时只支持[ag]
+(Optional) */
+func (r *DescribeQuotasRequest) SetFilters(filters []common.Filter) {
+    r.Filters = filters
 }
 
 // GetRegionId returns path parameter 'regionId' if exist,
 // otherwise return empty string
-func (r DescribeImageConstraintsRequest) GetRegionId() string {
+func (r DescribeQuotasRequest) GetRegionId() string {
     return r.RegionId
 }
 
-type DescribeImageConstraintsResponse struct {
+type DescribeQuotasResponse struct {
     RequestID string `json:"requestId"`
     Error core.ErrorResponse `json:"error"`
-    Result DescribeImageConstraintsResult `json:"result"`
+    Result DescribeQuotasResult `json:"result"`
 }
 
-type DescribeImageConstraintsResult struct {
-    ImageConstraints vm.ImageConstraint `json:"imageConstraints"`
+type DescribeQuotasResult struct {
+    Quotas []ag.Quota `json:"quotas"`
 }

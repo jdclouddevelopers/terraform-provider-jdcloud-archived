@@ -20,73 +20,73 @@ import (
     "github.com/jdcloud-api/jdcloud-sdk-go/core"
 )
 
-type UnShareImageRequest struct {
+type AbandonInstancesRequest struct {
 
     core.JDCloudRequest
 
-    /* 地域ID  */
+    /* 地域  */
     RegionId string `json:"regionId"`
 
-    /* 镜像ID  */
-    ImageId string `json:"imageId"`
+    /* 可用组 ID  */
+    AgId string `json:"agId"`
 
-    /* 需要取消的帐户 (Optional) */
-    Pins []string `json:"pins"`
+    /* 准备剔除出可用组的实例 id (Optional) */
+    InstanceIds []string `json:"instanceIds"`
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
+ * param regionId: 地域 (Required)
+ * param agId: 可用组 ID (Required)
  *
  * @Deprecated, not compatible when mandatory parameters changed
  */
-func NewUnShareImageRequest(
+func NewAbandonInstancesRequest(
     regionId string,
-    imageId string,
-) *UnShareImageRequest {
+    agId string,
+) *AbandonInstancesRequest {
 
-	return &UnShareImageRequest{
+	return &AbandonInstancesRequest{
         JDCloudRequest: core.JDCloudRequest{
-			URL:     "/regions/{regionId}/images/{imageId}:unshare",
+			URL:     "/regions/{regionId}/availabilityGroups/{agId}:abandonInstances",
 			Method:  "POST",
 			Header:  nil,
 			Version: "v1",
 		},
         RegionId: regionId,
-        ImageId: imageId,
+        AgId: agId,
 	}
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
- * param pins: 需要取消的帐户 (Optional)
+ * param regionId: 地域 (Required)
+ * param agId: 可用组 ID (Required)
+ * param instanceIds: 准备剔除出可用组的实例 id (Optional)
  */
-func NewUnShareImageRequestWithAllParams(
+func NewAbandonInstancesRequestWithAllParams(
     regionId string,
-    imageId string,
-    pins []string,
-) *UnShareImageRequest {
+    agId string,
+    instanceIds []string,
+) *AbandonInstancesRequest {
 
-    return &UnShareImageRequest{
+    return &AbandonInstancesRequest{
         JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}:unshare",
+            URL:     "/regions/{regionId}/availabilityGroups/{agId}:abandonInstances",
             Method:  "POST",
             Header:  nil,
             Version: "v1",
         },
         RegionId: regionId,
-        ImageId: imageId,
-        Pins: pins,
+        AgId: agId,
+        InstanceIds: instanceIds,
     }
 }
 
 /* This constructor has better compatible ability when API parameters changed */
-func NewUnShareImageRequestWithoutParam() *UnShareImageRequest {
+func NewAbandonInstancesRequestWithoutParam() *AbandonInstancesRequest {
 
-    return &UnShareImageRequest{
+    return &AbandonInstancesRequest{
             JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}:unshare",
+            URL:     "/regions/{regionId}/availabilityGroups/{agId}:abandonInstances",
             Method:  "POST",
             Header:  nil,
             Version: "v1",
@@ -94,32 +94,32 @@ func NewUnShareImageRequestWithoutParam() *UnShareImageRequest {
     }
 }
 
-/* param regionId: 地域ID(Required) */
-func (r *UnShareImageRequest) SetRegionId(regionId string) {
+/* param regionId: 地域(Required) */
+func (r *AbandonInstancesRequest) SetRegionId(regionId string) {
     r.RegionId = regionId
 }
 
-/* param imageId: 镜像ID(Required) */
-func (r *UnShareImageRequest) SetImageId(imageId string) {
-    r.ImageId = imageId
+/* param agId: 可用组 ID(Required) */
+func (r *AbandonInstancesRequest) SetAgId(agId string) {
+    r.AgId = agId
 }
 
-/* param pins: 需要取消的帐户(Optional) */
-func (r *UnShareImageRequest) SetPins(pins []string) {
-    r.Pins = pins
+/* param instanceIds: 准备剔除出可用组的实例 id(Optional) */
+func (r *AbandonInstancesRequest) SetInstanceIds(instanceIds []string) {
+    r.InstanceIds = instanceIds
 }
 
 // GetRegionId returns path parameter 'regionId' if exist,
 // otherwise return empty string
-func (r UnShareImageRequest) GetRegionId() string {
+func (r AbandonInstancesRequest) GetRegionId() string {
     return r.RegionId
 }
 
-type UnShareImageResponse struct {
+type AbandonInstancesResponse struct {
     RequestID string `json:"requestId"`
     Error core.ErrorResponse `json:"error"`
-    Result UnShareImageResult `json:"result"`
+    Result AbandonInstancesResult `json:"result"`
 }
 
-type UnShareImageResult struct {
+type AbandonInstancesResult struct {
 }

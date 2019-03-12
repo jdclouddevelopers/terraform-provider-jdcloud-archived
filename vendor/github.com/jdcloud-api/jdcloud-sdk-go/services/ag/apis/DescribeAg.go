@@ -18,70 +18,70 @@ package apis
 
 import (
     "github.com/jdcloud-api/jdcloud-sdk-go/core"
-    vm "github.com/jdcloud-api/jdcloud-sdk-go/services/vm/models"
+    ag "github.com/jdcloud-api/jdcloud-sdk-go/services/ag/models"
 )
 
-type DescribeImageConstraintsRequest struct {
+type DescribeAgRequest struct {
 
     core.JDCloudRequest
 
-    /* 地域ID  */
+    /* 地域  */
     RegionId string `json:"regionId"`
 
-    /* 镜像ID  */
-    ImageId string `json:"imageId"`
+    /* 可用组 ID  */
+    AgId string `json:"agId"`
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
+ * param regionId: 地域 (Required)
+ * param agId: 可用组 ID (Required)
  *
  * @Deprecated, not compatible when mandatory parameters changed
  */
-func NewDescribeImageConstraintsRequest(
+func NewDescribeAgRequest(
     regionId string,
-    imageId string,
-) *DescribeImageConstraintsRequest {
+    agId string,
+) *DescribeAgRequest {
 
-	return &DescribeImageConstraintsRequest{
+	return &DescribeAgRequest{
         JDCloudRequest: core.JDCloudRequest{
-			URL:     "/regions/{regionId}/images/{imageId}/constraints",
+			URL:     "/regions/{regionId}/availabilityGroups/{agId}",
 			Method:  "GET",
 			Header:  nil,
 			Version: "v1",
 		},
         RegionId: regionId,
-        ImageId: imageId,
+        AgId: agId,
 	}
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
+ * param regionId: 地域 (Required)
+ * param agId: 可用组 ID (Required)
  */
-func NewDescribeImageConstraintsRequestWithAllParams(
+func NewDescribeAgRequestWithAllParams(
     regionId string,
-    imageId string,
-) *DescribeImageConstraintsRequest {
+    agId string,
+) *DescribeAgRequest {
 
-    return &DescribeImageConstraintsRequest{
+    return &DescribeAgRequest{
         JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}/constraints",
+            URL:     "/regions/{regionId}/availabilityGroups/{agId}",
             Method:  "GET",
             Header:  nil,
             Version: "v1",
         },
         RegionId: regionId,
-        ImageId: imageId,
+        AgId: agId,
     }
 }
 
 /* This constructor has better compatible ability when API parameters changed */
-func NewDescribeImageConstraintsRequestWithoutParam() *DescribeImageConstraintsRequest {
+func NewDescribeAgRequestWithoutParam() *DescribeAgRequest {
 
-    return &DescribeImageConstraintsRequest{
+    return &DescribeAgRequest{
             JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}/constraints",
+            URL:     "/regions/{regionId}/availabilityGroups/{agId}",
             Method:  "GET",
             Header:  nil,
             Version: "v1",
@@ -89,28 +89,28 @@ func NewDescribeImageConstraintsRequestWithoutParam() *DescribeImageConstraintsR
     }
 }
 
-/* param regionId: 地域ID(Required) */
-func (r *DescribeImageConstraintsRequest) SetRegionId(regionId string) {
+/* param regionId: 地域(Required) */
+func (r *DescribeAgRequest) SetRegionId(regionId string) {
     r.RegionId = regionId
 }
 
-/* param imageId: 镜像ID(Required) */
-func (r *DescribeImageConstraintsRequest) SetImageId(imageId string) {
-    r.ImageId = imageId
+/* param agId: 可用组 ID(Required) */
+func (r *DescribeAgRequest) SetAgId(agId string) {
+    r.AgId = agId
 }
 
 // GetRegionId returns path parameter 'regionId' if exist,
 // otherwise return empty string
-func (r DescribeImageConstraintsRequest) GetRegionId() string {
+func (r DescribeAgRequest) GetRegionId() string {
     return r.RegionId
 }
 
-type DescribeImageConstraintsResponse struct {
+type DescribeAgResponse struct {
     RequestID string `json:"requestId"`
     Error core.ErrorResponse `json:"error"`
-    Result DescribeImageConstraintsResult `json:"result"`
+    Result DescribeAgResult `json:"result"`
 }
 
-type DescribeImageConstraintsResult struct {
-    ImageConstraints vm.ImageConstraint `json:"imageConstraints"`
+type DescribeAgResult struct {
+    Ag ag.AvailabilityGroup `json:"ag"`
 }

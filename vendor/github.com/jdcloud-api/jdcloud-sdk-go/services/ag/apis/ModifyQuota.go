@@ -18,99 +18,105 @@ package apis
 
 import (
     "github.com/jdcloud-api/jdcloud-sdk-go/core"
-    vm "github.com/jdcloud-api/jdcloud-sdk-go/services/vm/models"
 )
 
-type DescribeImageConstraintsRequest struct {
+type ModifyQuotaRequest struct {
 
     core.JDCloudRequest
 
-    /* 地域ID  */
+    /* Region ID  */
     RegionId string `json:"regionId"`
 
-    /* 镜像ID  */
-    ImageId string `json:"imageId"`
+    /* 资源类型[ag] (Optional) */
+    ResourceType *string `json:"resourceType"`
+
+    /* 配额上限 (Optional) */
+    Limit *int `json:"limit"`
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
+ * param regionId: Region ID (Required)
  *
  * @Deprecated, not compatible when mandatory parameters changed
  */
-func NewDescribeImageConstraintsRequest(
+func NewModifyQuotaRequest(
     regionId string,
-    imageId string,
-) *DescribeImageConstraintsRequest {
+) *ModifyQuotaRequest {
 
-	return &DescribeImageConstraintsRequest{
+	return &ModifyQuotaRequest{
         JDCloudRequest: core.JDCloudRequest{
-			URL:     "/regions/{regionId}/images/{imageId}/constraints",
-			Method:  "GET",
+			URL:     "/regions/{regionId}/quotas",
+			Method:  "PATCH",
 			Header:  nil,
 			Version: "v1",
 		},
         RegionId: regionId,
-        ImageId: imageId,
 	}
 }
 
 /*
- * param regionId: 地域ID (Required)
- * param imageId: 镜像ID (Required)
+ * param regionId: Region ID (Required)
+ * param resourceType: 资源类型[ag] (Optional)
+ * param limit: 配额上限 (Optional)
  */
-func NewDescribeImageConstraintsRequestWithAllParams(
+func NewModifyQuotaRequestWithAllParams(
     regionId string,
-    imageId string,
-) *DescribeImageConstraintsRequest {
+    resourceType *string,
+    limit *int,
+) *ModifyQuotaRequest {
 
-    return &DescribeImageConstraintsRequest{
+    return &ModifyQuotaRequest{
         JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}/constraints",
-            Method:  "GET",
+            URL:     "/regions/{regionId}/quotas",
+            Method:  "PATCH",
             Header:  nil,
             Version: "v1",
         },
         RegionId: regionId,
-        ImageId: imageId,
+        ResourceType: resourceType,
+        Limit: limit,
     }
 }
 
 /* This constructor has better compatible ability when API parameters changed */
-func NewDescribeImageConstraintsRequestWithoutParam() *DescribeImageConstraintsRequest {
+func NewModifyQuotaRequestWithoutParam() *ModifyQuotaRequest {
 
-    return &DescribeImageConstraintsRequest{
+    return &ModifyQuotaRequest{
             JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/images/{imageId}/constraints",
-            Method:  "GET",
+            URL:     "/regions/{regionId}/quotas",
+            Method:  "PATCH",
             Header:  nil,
             Version: "v1",
         },
     }
 }
 
-/* param regionId: 地域ID(Required) */
-func (r *DescribeImageConstraintsRequest) SetRegionId(regionId string) {
+/* param regionId: Region ID(Required) */
+func (r *ModifyQuotaRequest) SetRegionId(regionId string) {
     r.RegionId = regionId
 }
 
-/* param imageId: 镜像ID(Required) */
-func (r *DescribeImageConstraintsRequest) SetImageId(imageId string) {
-    r.ImageId = imageId
+/* param resourceType: 资源类型[ag](Optional) */
+func (r *ModifyQuotaRequest) SetResourceType(resourceType string) {
+    r.ResourceType = &resourceType
+}
+
+/* param limit: 配额上限(Optional) */
+func (r *ModifyQuotaRequest) SetLimit(limit int) {
+    r.Limit = &limit
 }
 
 // GetRegionId returns path parameter 'regionId' if exist,
 // otherwise return empty string
-func (r DescribeImageConstraintsRequest) GetRegionId() string {
+func (r ModifyQuotaRequest) GetRegionId() string {
     return r.RegionId
 }
 
-type DescribeImageConstraintsResponse struct {
+type ModifyQuotaResponse struct {
     RequestID string `json:"requestId"`
     Error core.ErrorResponse `json:"error"`
-    Result DescribeImageConstraintsResult `json:"result"`
+    Result ModifyQuotaResult `json:"result"`
 }
 
-type DescribeImageConstraintsResult struct {
-    ImageConstraints vm.ImageConstraint `json:"imageConstraints"`
+type ModifyQuotaResult struct {
 }

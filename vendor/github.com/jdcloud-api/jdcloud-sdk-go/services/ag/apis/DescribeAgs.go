@@ -18,15 +18,15 @@ package apis
 
 import (
     "github.com/jdcloud-api/jdcloud-sdk-go/core"
-    vm "github.com/jdcloud-api/jdcloud-sdk-go/services/vm/models"
+    ag "github.com/jdcloud-api/jdcloud-sdk-go/services/ag/models"
     common "github.com/jdcloud-api/jdcloud-sdk-go/services/common/models"
 )
 
-type DescribeKeypairsRequest struct {
+type DescribeAgsRequest struct {
 
     core.JDCloudRequest
 
-    /* 地域ID  */
+    /* 地域  */
     RegionId string `json:"regionId"`
 
     /* 页码；默认为1 (Optional) */
@@ -35,23 +35,25 @@ type DescribeKeypairsRequest struct {
     /* 分页大小；默认为20；取值范围[10, 100] (Optional) */
     PageSize *int `json:"pageSize"`
 
-    /* keyNames - 密钥对名称，精确匹配，支持多个
+    /* agName - ag名字，支持模糊匹配
+agId - agId，精确匹配
+instanceTemplateId - 实例模板id，精确匹配
  (Optional) */
     Filters []common.Filter `json:"filters"`
 }
 
 /*
- * param regionId: 地域ID (Required)
+ * param regionId: 地域 (Required)
  *
  * @Deprecated, not compatible when mandatory parameters changed
  */
-func NewDescribeKeypairsRequest(
+func NewDescribeAgsRequest(
     regionId string,
-) *DescribeKeypairsRequest {
+) *DescribeAgsRequest {
 
-	return &DescribeKeypairsRequest{
+	return &DescribeAgsRequest{
         JDCloudRequest: core.JDCloudRequest{
-			URL:     "/regions/{regionId}/keypairs",
+			URL:     "/regions/{regionId}/availabilityGroups",
 			Method:  "GET",
 			Header:  nil,
 			Version: "v1",
@@ -61,22 +63,24 @@ func NewDescribeKeypairsRequest(
 }
 
 /*
- * param regionId: 地域ID (Required)
+ * param regionId: 地域 (Required)
  * param pageNumber: 页码；默认为1 (Optional)
  * param pageSize: 分页大小；默认为20；取值范围[10, 100] (Optional)
- * param filters: keyNames - 密钥对名称，精确匹配，支持多个
+ * param filters: agName - ag名字，支持模糊匹配
+agId - agId，精确匹配
+instanceTemplateId - 实例模板id，精确匹配
  (Optional)
  */
-func NewDescribeKeypairsRequestWithAllParams(
+func NewDescribeAgsRequestWithAllParams(
     regionId string,
     pageNumber *int,
     pageSize *int,
     filters []common.Filter,
-) *DescribeKeypairsRequest {
+) *DescribeAgsRequest {
 
-    return &DescribeKeypairsRequest{
+    return &DescribeAgsRequest{
         JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/keypairs",
+            URL:     "/regions/{regionId}/availabilityGroups",
             Method:  "GET",
             Header:  nil,
             Version: "v1",
@@ -89,11 +93,11 @@ func NewDescribeKeypairsRequestWithAllParams(
 }
 
 /* This constructor has better compatible ability when API parameters changed */
-func NewDescribeKeypairsRequestWithoutParam() *DescribeKeypairsRequest {
+func NewDescribeAgsRequestWithoutParam() *DescribeAgsRequest {
 
-    return &DescribeKeypairsRequest{
+    return &DescribeAgsRequest{
             JDCloudRequest: core.JDCloudRequest{
-            URL:     "/regions/{regionId}/keypairs",
+            URL:     "/regions/{regionId}/availabilityGroups",
             Method:  "GET",
             Header:  nil,
             Version: "v1",
@@ -101,40 +105,42 @@ func NewDescribeKeypairsRequestWithoutParam() *DescribeKeypairsRequest {
     }
 }
 
-/* param regionId: 地域ID(Required) */
-func (r *DescribeKeypairsRequest) SetRegionId(regionId string) {
+/* param regionId: 地域(Required) */
+func (r *DescribeAgsRequest) SetRegionId(regionId string) {
     r.RegionId = regionId
 }
 
 /* param pageNumber: 页码；默认为1(Optional) */
-func (r *DescribeKeypairsRequest) SetPageNumber(pageNumber int) {
+func (r *DescribeAgsRequest) SetPageNumber(pageNumber int) {
     r.PageNumber = &pageNumber
 }
 
 /* param pageSize: 分页大小；默认为20；取值范围[10, 100](Optional) */
-func (r *DescribeKeypairsRequest) SetPageSize(pageSize int) {
+func (r *DescribeAgsRequest) SetPageSize(pageSize int) {
     r.PageSize = &pageSize
 }
 
-/* param filters: keyNames - 密钥对名称，精确匹配，支持多个
+/* param filters: agName - ag名字，支持模糊匹配
+agId - agId，精确匹配
+instanceTemplateId - 实例模板id，精确匹配
 (Optional) */
-func (r *DescribeKeypairsRequest) SetFilters(filters []common.Filter) {
+func (r *DescribeAgsRequest) SetFilters(filters []common.Filter) {
     r.Filters = filters
 }
 
 // GetRegionId returns path parameter 'regionId' if exist,
 // otherwise return empty string
-func (r DescribeKeypairsRequest) GetRegionId() string {
+func (r DescribeAgsRequest) GetRegionId() string {
     return r.RegionId
 }
 
-type DescribeKeypairsResponse struct {
+type DescribeAgsResponse struct {
     RequestID string `json:"requestId"`
     Error core.ErrorResponse `json:"error"`
-    Result DescribeKeypairsResult `json:"result"`
+    Result DescribeAgsResult `json:"result"`
 }
 
-type DescribeKeypairsResult struct {
-    Keypairs []vm.Keypair `json:"keypairs"`
+type DescribeAgsResult struct {
+    Ags []ag.AvailabilityGroup `json:"ags"`
     TotalCount int `json:"totalCount"`
 }
