@@ -11,7 +11,7 @@ import (
 
 /*
 	TestCase : 1-[Pass].common stuff only. Not yet found any tricky point requires extra attention
-			   2. TODO Concurrent disk attaching -> To same instance
+			   2 .Concurrent disk attachment/Detachment
 */
 
 const TestAccDiskAttachmentTemplate = `
