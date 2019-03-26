@@ -49,6 +49,7 @@ func diskAttachmentStatusRefreshFunc(d *schema.ResourceData, meta interface{}, i
 																				         -> 400 Disk Already Attached (what...)
 
 */
+
 func performDiskAttach(meta interface{}, diskID, instanceID, deviceName string, auto_delete bool) (requestId string, e error) {
 
 	stateConf := &resource.StateChangeConf{
