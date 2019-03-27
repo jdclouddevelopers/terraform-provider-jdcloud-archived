@@ -57,36 +57,10 @@ func resourceJDCloudAGInstance() *schema.Resource {
 
 func resourceJDCloudAGInstanceCreate(d *schema.ResourceData, m interface{}) error {
 
-	config := m.(*JDCloudConfig)
 	agId := d.Get("availability_group_id").(string)
-
-	reqs := []*apis.CreateInstancesRequest{}
-	for _, item := range d.Get("instances").(*schema.Set).List() {
-
-		itemMap := item.(map[string]interface{})
-		req := apis.NewCreateInstancesRequest(config.Region, &vm.InstanceSpec{
-			AgId: &agId,
-			Name: itemMap["instance_name"].(string),
-		})
-		reqs = append(reqs, req)
+	if e := createAgInstances(d, m, agId, d.Get("instances").(*schema.Set)); e != nil {
+		return e
 	}
-	instanceIds, errs := agInstancesSendRequests(m, reqs)
-	if len(errs) > 0 {
-		return errs[0]
-	}
-
-	// Waiting until VMs are ready
-	for _, instanceId := range instanceIds {
-		if e := instanceStatusWaiter(d, m, instanceId, []string{VM_PENDING, VM_STARTING}, []string{VM_RUNNING}); e != nil {
-			errs = append(errs, e)
-		}
-
-	}
-	if len(errs) > 0 {
-		log.Printf("Create Error happens returning...")
-		return errs[0]
-	}
-
 	d.SetId(agId)
 	return resourceJDCloudAGInstanceRead(d, m)
 }
@@ -142,7 +116,7 @@ func resourceJDCloudAGInstanceUpdate(d *schema.ResourceData, m interface{}) erro
 		currentSet := currentInterface.(*schema.Set)
 		intersect := previousSet.Intersection(currentSet)
 
-		// Perform delting
+		// Perform deleting
 		detach := previousSet.Difference(intersect)
 		if len(detach.List()) > 0 {
 			ids := getIdLists(detach)
@@ -155,9 +129,8 @@ func resourceJDCloudAGInstanceUpdate(d *schema.ResourceData, m interface{}) erro
 		// Perform attaching
 		attach := currentSet.Difference(intersect)
 		if len(attach.List()) > 0 {
-			ids := getIdLists(attach)
-			if e := deleteInstances(d, m, ids); e != nil {
-				return fmt.Errorf("AGInstance Update Failed in attaching , %v", e)
+			if e := createAgInstances(d, m, d.Id(), attach); e != nil {
+				return e
 			}
 		}
 		d.SetPartial("instances")
@@ -203,6 +176,40 @@ func agInstancesSendRequests(m interface{}, reqs []*apis.CreateInstancesRequest)
 		}
 	}
 	return
+}
+
+// Level-0 Create some instances
+func createAgInstances(d *schema.ResourceData, m interface{}, agId string, set *schema.Set) error {
+
+	// Send some requests
+	reqs := []*apis.CreateInstancesRequest{}
+	for _, item := range set.List() {
+		itemMap := item.(map[string]interface{})
+		config := m.(*JDCloudConfig)
+		req := apis.NewCreateInstancesRequest(config.Region, &vm.InstanceSpec{
+			AgId: &agId,
+			Name: itemMap["instance_name"].(string),
+		})
+		reqs = append(reqs, req)
+	}
+	instanceIds, errs := agInstancesSendRequests(m, reqs)
+	if len(errs) > 0 {
+		return errs[0]
+	}
+
+	// Waiting until VMs are ready
+	for _, instanceId := range instanceIds {
+		if e := instanceStatusWaiter(d, m, instanceId, []string{VM_PENDING, VM_STARTING}, []string{VM_RUNNING}); e != nil {
+			errs = append(errs, e)
+		}
+
+	}
+	if len(errs) > 0 {
+		log.Printf("Create Error happens returning...")
+		return errs[0]
+	}
+
+	return nil
 }
 
 func resourceJDCloudAGInstanceDelete(d *schema.ResourceData, m interface{}) error {
