@@ -88,7 +88,6 @@ func TestAccJDCloudDiskAttachment_basic(t *testing.T) {
 	})
 }
 
-
 // 2-[Pass]. Concurrent disk attachment/Detachment
 const TestAccDiskAttachmentConcurrentAttach = `
 resource "jdcloud_disk_attachment" "terraform_con_1"{
@@ -111,7 +110,7 @@ func TestAccJDCloudDiskAttachment_concurrent_attach(t *testing.T) {
 		IDRefreshName: "jdcloud_disk_attachment.terraform_da",
 		PreCheck:      func() { testAccPreCheck(t) },
 		Providers:     testAccProviders,
-		CheckDestroy:  testAccDiskAttachmentBothDestroy(&instanceId, &diskId,&diskId2),
+		CheckDestroy:  testAccDiskAttachmentBothDestroy(&instanceId, &diskId, &diskId2),
 		Steps: []resource.TestStep{
 			{
 				Config: TestAccDiskAttachmentConcurrentAttach,
@@ -138,7 +137,6 @@ func TestAccJDCloudDiskAttachment_concurrent_attach(t *testing.T) {
 						"jdcloud_disk_attachment.terraform_con_1", "device_name"),
 					resource.TestCheckResourceAttrSet(
 						"jdcloud_disk_attachment.terraform_con_2", "device_name"),
-
 				),
 			},
 		},
@@ -204,7 +202,7 @@ func testAccDiskAttachmentDestroy(resourceId *string, diskId *string) resource.T
 		return nil
 	}
 }
-func testAccDiskAttachmentBothDestroy(resourceId *string, diskId ,diskId2 *string) resource.TestCheckFunc {
+func testAccDiskAttachmentBothDestroy(resourceId *string, diskId, diskId2 *string) resource.TestCheckFunc {
 
 	return func(stateInfo *terraform.State) error {
 		config := testAccProvider.Meta().(*JDCloudConfig)

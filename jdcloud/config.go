@@ -65,6 +65,7 @@ const (
 	VM_RUNNING        = "running"
 	VM_STOPPING       = "stopping"
 	VM_STOPPED        = "stopped"
+	VM_STOPPED_2      = ""
 	VM_REBOOTING      = "rebooting"
 	VM_REBUILDING     = "rebuilding"
 	VM_RESIZING       = "resizing"

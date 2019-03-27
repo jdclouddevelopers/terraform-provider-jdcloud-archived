@@ -257,7 +257,7 @@ func resourceJDCloudNetworkInterfaceUpdate(d *schema.ResourceData, meta interfac
 		p1, c1 := d.GetChange("secondary_ip_count")
 
 		if c1.(int) < p1.(int) {
-			// TODO detach some random IPs should also be allowed 
+			// TODO detach some random IPs should also be allowed
 			return fmt.Errorf("Currently you can only add more")
 		}
 
