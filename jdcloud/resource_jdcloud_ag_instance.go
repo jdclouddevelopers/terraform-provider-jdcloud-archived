@@ -44,6 +44,11 @@ func resourceJDCloudAGInstance() *schema.Resource {
 							Type:     schema.TypeString,
 							Required: true,
 						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Default:  "Created by Terraform",
+						},
 						"instance_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -87,6 +92,7 @@ func resourceJDCloudAGInstanceRead(d *schema.ResourceData, m interface{}) error 
 				specs = append(specs, map[string]interface{}{
 					"instance_id":   item.InstanceId,
 					"instance_name": item.InstanceName,
+					"description":   item.Description,
 				})
 			}
 			if e := d.Set("instances", specs); e != nil {
@@ -187,8 +193,9 @@ func createAgInstances(d *schema.ResourceData, m interface{}, agId string, set *
 		itemMap := item.(map[string]interface{})
 		config := m.(*JDCloudConfig)
 		req := apis.NewCreateInstancesRequest(config.Region, &vm.InstanceSpec{
-			AgId: &agId,
-			Name: itemMap["instance_name"].(string),
+			AgId:        &agId,
+			Name:        itemMap["instance_name"].(string),
+			Description: stringAddr(itemMap["description"].(string)),
 		})
 		reqs = append(reqs, req)
 	}
