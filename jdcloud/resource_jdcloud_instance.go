@@ -125,7 +125,7 @@ func StopVmInstance(d *schema.ResourceData, m interface{}, instanceId string) er
 	vmClient := client.NewVmClient(config.Credential)
 	req := apis.NewStopInstanceRequest(config.Region, instanceId)
 
-	return resource.Retry(time.Minute, func() *resource.RetryError {
+	e := resource.Retry(time.Minute, func() *resource.RetryError {
 
 		resp, err := vmClient.StopInstance(req)
 
