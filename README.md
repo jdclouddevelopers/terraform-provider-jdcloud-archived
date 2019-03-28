@@ -79,11 +79,6 @@ _Note_
 * Acceptance creates real resources, it will probably cost some money.
 * Process usually takes 20~30 minutes depends on your network condition.
 
-## Contact Us 
-
-Contact us JDCloud-Team <ark@jd.com>
-
-
 ## License
 
 Mozilla Public License 2.0
