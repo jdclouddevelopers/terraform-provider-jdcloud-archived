@@ -89,7 +89,6 @@ func TestAccJDCloudDiskAttachment_basic(t *testing.T) {
 	})
 }
 
-
 // 2-[Pass]. Concurrent disk attachment/Detachment
 const TestAccDiskAttachmentConcurrentAttach = `
 resource "jdcloud_disk_attachment" "terraform_con_1"{
@@ -230,4 +229,3 @@ func testAccDiskAttachmentBothDestroy(resourceId *string, diskId, diskId2 *strin
 		return nil
 	}
 }
-

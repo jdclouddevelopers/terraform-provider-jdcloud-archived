@@ -39,7 +39,6 @@ func stringAddr(v interface{}) *string {
 	return &r
 }
 
-
 func intAddr(v interface{}) *int {
 	r := v.(int)
 	return &r
@@ -141,7 +140,6 @@ func StopVmInstance(d *schema.ResourceData, m interface{}, instanceId string) er
 		}
 	})
 
-
 	if e != nil {
 		return e
 	}
@@ -173,7 +171,6 @@ func StartVmInstance(d *schema.ResourceData, m interface{}) error {
 	}
 	return instanceStatusWaiter(d, m, d.Id(), []string{VM_STOPPED, VM_STARTING}, []string{VM_RUNNING})
 }
-
 
 func DeleteVmInstance(d *schema.ResourceData, m interface{}, id string) error {
 
@@ -262,7 +259,6 @@ func instanceStatusWaiter(d *schema.ResourceData, meta interface{}, id string, p
 	}
 	return nil
 }
-
 
 // Level 2~3  delete a specified instance
 func deleteInstance(d *schema.ResourceData, m interface{}, instanceId string) error {
@@ -635,7 +631,7 @@ func resourceJDCloudInstance() *schema.Resource {
 }
 
 func resourceJDCloudInstanceCreate(d *schema.ResourceData, m interface{}) error {
-  
+
 	config := m.(*JDCloudConfig)
 	vmClient := client.NewVmClient(config.Credential)
 	logger := vmLogger{}
@@ -852,7 +848,6 @@ func resourceJDCloudInstanceDelete(d *schema.ResourceData, m interface{}) error 
 	if err != nil {
 		return fmt.Errorf("stop instance got error:%s", err)
 	}
-
 
 	// Wait until stopped
 	err = instanceStatusWaiter(d, m, d.Id(), []string{VM_RUNNING, VM_STOPPING, VM_STOPPED_2}, []string{VM_STOPPED})

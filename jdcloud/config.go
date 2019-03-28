@@ -50,7 +50,6 @@ const (
 	DISK_ATTACHED           = "attached"
 	DISK_DETACHED           = "detached"
 
-
 	DISK_CONCURRENT_ATTACHMENT_ERROR   = "Conflict with underlay task"
 	REQUEST_SERVER_ERROR               = 500
 	DISK_CONCURRENT_ATTACHMENT_ERROR_2 = "Unknown server error"
