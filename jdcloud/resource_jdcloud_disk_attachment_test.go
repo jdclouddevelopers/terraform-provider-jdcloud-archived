@@ -10,6 +10,7 @@ import (
 )
 
 /*
+
 	TestCase : 1-[Pass]. Common stuff only. Not yet found any tricky point requires extra attention
 			   2-[Pass]. Concurrent disk attachment/Detachment
 */
@@ -87,6 +88,7 @@ func TestAccJDCloudDiskAttachment_basic(t *testing.T) {
 		},
 	})
 }
+
 
 // 2-[Pass]. Concurrent disk attachment/Detachment
 const TestAccDiskAttachmentConcurrentAttach = `
@@ -202,6 +204,7 @@ func testAccDiskAttachmentDestroy(resourceId *string, diskId *string) resource.T
 		return nil
 	}
 }
+
 func testAccDiskAttachmentBothDestroy(resourceId *string, diskId, diskId2 *string) resource.TestCheckFunc {
 
 	return func(stateInfo *terraform.State) error {
@@ -227,3 +230,4 @@ func testAccDiskAttachmentBothDestroy(resourceId *string, diskId, diskId2 *strin
 		return nil
 	}
 }
+

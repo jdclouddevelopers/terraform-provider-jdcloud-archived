@@ -312,7 +312,7 @@ func resourceJDCloudDiskAttachmentDelete(d *schema.ResourceData, meta interface{
 	if _, ok := d.GetOk("force_detach"); ok {
 		force_detach = d.Get("force_detach").(bool)
 	}
-	e := performDiskDetach(meta, diskID, instanceID, force_detach)
+	e := performDiskDetach(meta, diskID, instanceID, force_det
 	if e != nil {
 		return e
 	}

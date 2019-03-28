@@ -394,6 +394,7 @@ resource "jdcloud_instance_ag_instance" "ag_set" {
   ]
 }
 
+
 # ---------------------------------------------------------- KEY-PAIRS
 
 resource "jdcloud_key_pairs" "key-1" {
