@@ -13,7 +13,6 @@ If you have any questions, feel free to let us know 😊
 
 - JDCloud-Team <ark@jd.com>
 - Email <liangxiaohan@jd.com>
-- Dongdong liangxiaohan
 
 
 # Requirements

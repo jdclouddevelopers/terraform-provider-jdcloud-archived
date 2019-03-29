@@ -49,7 +49,7 @@ func diskAttachmentStatusRefreshFunc(d *schema.ResourceData, meta interface{}, i
 																				         -> 400 Disk Already Attached (what...)
 
 */
-func performDiskAttach(meta interface{}, diskID, instanceID, deviceName string, auto_delete bool) (requestId string, e error) {
+func performDiskAttach(meta interface{}, diskID, instanceID, deviceName string, autoDelete bool) (requestId string, e error) {
 
 	stateConf := &resource.StateChangeConf{
 		Pending: []string{"connection_error", "task_conflict"},
@@ -63,8 +63,8 @@ func performDiskAttach(meta interface{}, diskID, instanceID, deviceName string, 
 			if len(deviceName) > 0 {
 				req.DeviceName = &deviceName
 			}
-			if auto_delete == true {
-				req.AutoDelete = &auto_delete
+			if autoDelete {
+				req.AutoDelete = &autoDelete
 			}
 			resp, err := c.AttachDisk(req)
 
@@ -108,7 +108,7 @@ func performDiskAttach(meta interface{}, diskID, instanceID, deviceName string, 
 }
 
 // This function will send a request of detachment,do not wait,just send, level 0
-func performDiskDetach(meta interface{}, diskID, instanceID string, force_detach bool) error {
+func performDiskDetach(meta interface{}, diskID, instanceID string, forceDetach bool) error {
 
 	stateConf := &resource.StateChangeConf{
 		Pending: []string{"connection_error", "task_conflict"},
@@ -118,8 +118,8 @@ func performDiskDetach(meta interface{}, diskID, instanceID string, force_detach
 			config := meta.(*JDCloudConfig)
 			c := client.NewVmClient(config.Credential)
 			req := apis.NewDetachDiskRequest(config.Region, instanceID, diskID)
-			if force_detach == true {
-				req.Force = &force_detach
+			if forceDetach {
+				req.Force = &forceDetach
 			}
 			resp, err := c.DetachDisk(req)
 
