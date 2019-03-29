@@ -3,6 +3,17 @@ Terraform Provider for JDCloud
 
 [![Build Status](https://travis-ci.com/jdclouddevelopers/terraform-provider-jdcloud.svg?branch=master)](https://travis-ci.com/jdclouddevelopers/terraform-provider-jdcloud)
 
+# *Reminders
+
+Hi 👋! JDCloud is now one of the Terraform official providers. All files and documents 
+has been moved to the [Our New Repository](https://github.com/terraform-providers/terraform-provider-jdcloud). 
+This project has been deprecated. Any bugs or issues, please report it to [Our New Repository](https://github.com/terraform-providers/terraform-provider-jdcloud) 
+
+If you have any questions, feel free to let us know 😊
+
+- JDCloud-Team <ark@jd.com>
+- Email <liangxiaohan@jd.com>
+
 
 # Requirements
 
@@ -13,7 +24,7 @@ Terraform Provider for JDCloud
 
 * Prepare a folder for Terraform 
 ```bash
-makedir terraform && cd terraform 
+mkdir terraform && cd terraform 
 ```
 * Prepare your `jdcloud.tf`. This is where Terraform begins 
 ```bash
@@ -67,11 +78,6 @@ make testacc
 _Note_ 
 * Acceptance creates real resources, it will probably cost some money.
 * Process usually takes 20~30 minutes depends on your network condition.
-
-## Contact Us 
-
-Contact us JDCloud-Team <ark@jd.com>
-
 
 ## License
 

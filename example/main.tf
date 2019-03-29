@@ -376,6 +376,25 @@ resource "jdcloud_availability_group" "ag_01" {
   ag_type = "docker"
 }
 
+# ---------------------------------------------------------- CREATE-INSTANCE-INSIDE-AG
+# Make sure each instance have different names.
+#
+resource "jdcloud_instance_ag_instance" "ag_set" {
+  "availability_group_id" = "ag-example"
+  "instances" = [
+    {
+      "instance_name" = "ark01"
+    },
+    {
+      "instance_name" = "ark02"
+    },
+    {
+      "instance_name" = "ark03"
+    },
+  ]
+}
+
+
 # ---------------------------------------------------------- KEY-PAIRS
 
 resource "jdcloud_key_pairs" "key-1" {
